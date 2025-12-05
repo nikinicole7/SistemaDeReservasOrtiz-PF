@@ -1,1 +1,1 @@
-Aplicación web sencilla y eficiente para que pequeñas empresas puedan gestionar reservas de clientes. Permite registrar, editar, listar y eliminar reservas de manera rápida, sin necesidad de base de datos externa.
+Aplicacion web sencilla y eficiente para que pequenas empresas puedan gestionar reservas de clientes. Permite registrar, editar, listar y eliminar reservas de manera rapida, sin necesidad de base de datos externa.
