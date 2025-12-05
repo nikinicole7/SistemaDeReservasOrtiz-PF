@@ -1,0 +1,27 @@
+{
+  "name": "sistemas-de-reservas-ortiz",
+  "version": "1.0.0",
+  "description": "Sistema de reservas en memoria para Proyecto Final - Sistemas de Reservas Ortiz",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha test/reservations.test.js"
+  },
+  "keywords": [
+    "express",
+    "crud",
+    "reservas",
+    "ortiz"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "chai": "^6.2.1",
+    "mocha": "^11.7.5"
+  }
+}

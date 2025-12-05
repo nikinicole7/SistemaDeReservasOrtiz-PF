@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas de Reservas Ortiz - Gestión</title>
+    <style>
+        /* Paleta Elegante: Morado Suave (#8C4799), Lavanda Claro (#DDC8E7), Fondo Neutro (#F8F8F8) */
+        :root {
+            --color-primary: #8C4799; 
+            --color-secondary: #DDC8E7; 
+            --color-background: #F8F8F8; 
+            --color-text: #4A4A4A;
+            --color-danger: #D63031;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            background-color: var(--color-background); 
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+        .container { 
+            max-width: 1100px; 
+            margin: 40px auto; 
+            background: white; 
+            padding: 30px 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); 
+        }
+        h1 { 
+            color: var(--color-primary); 
+            text-align: center; 
+            font-weight: 600;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--color-secondary);
+            padding-bottom: 10px;
+        }
+        h2 { 
+            color: var(--color-primary);
+            margin-top: 30px; 
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        /* Formularios */
+        .form-group { margin-bottom: 18px; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 6px; 
+            font-weight: 500; 
+            color: var(--color-text);
+        }
+        .form-group input, .form-group textarea { 
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            border: 1px solid #E0E0E0; 
+            border-radius: 6px; 
+            background-color: #FAFAFA;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--color-primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(140, 71, 153, 0.1);
+        }
+        
+        /* Botones */
+        .action-button { 
+            background-color: var(--color-primary);
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .action-button:hover { background-color: #6C3577; }
+        
+        .edit-btn { 
+            background-color: var(--color-secondary); 
+            color: var(--color-primary); 
+            padding: 8px 12px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .edit-btn:hover { background-color: #CAB9D2; }
+
+        .delete-btn { 
+            background-color: var(--color-danger); 
+            color: white; 
+            padding: 8px 12px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-btn:hover { background-color: #A32526; }
+
+        /* Errores */
+        .error { 
+            color: white; 
+            background-color: var(--color-danger); 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-bottom: 25px; 
+            text-align: center; 
+            font-weight: bold;
+        }
+
+        /* Tabla */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th, td { 
+            border: 1px solid #F0F0F0; 
+            padding: 12px; 
+            text-align: left; 
+        }
+        th { 
+            background-color: var(--color-secondary); 
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #FAFAFA;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistemas de Reservas Ortiz</h1>
+
+        <% if (error) { %>
+            <div class="error"><%= error %></div>
+        <% } %>
+
+        <div id="create-section">
+            <h2>Registrar Nueva Reserva</h2>
+            <form action="/reservas" method="POST">
+                <div class="form-group">
+                    <label for="clientName">Nombre del Cliente</label>
+                    <input type="text" id="clientName" name="clientName" required>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="date">Fecha de Reserva</label>
+                        <input type="date" id="date" name="date" required min="<%= minDate %>">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="time">Hora de Reserva</label>
+                        <input type="time" id="time" name="time" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Cantidad de Personas</label>
+                    <input type="number" id="guests" name="guests" min="1" value="1" required>
+                </div>
+
+                <!-- NUEVO: Celular -->
+                <div class="form-group">
+                    <label for="celular">Teléfono Celular</label>
+                    <input type="tel" id="celular" name="celular" placeholder="809-000-0000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notas de Reserva</label>
+                    <textarea id="notes" name="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="action-button">Crear Reserva</button>
+            </form>
+        </div>
+
+        <h2>Listado de Reservas</h2>
+        <% if (reservations.length === 0) { %>
+            <p style="text-align: center; color: var(--color-primary); font-weight: 500;">No hay reservas registradas. ¡Empieza a gestionar tu calendario!</p>
+        <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Personas</th>
+                        <th>Celular</th>
+                        <th>Notas</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% reservations.forEach(reservation => { %>
+                        <tr>
+                            <td><%= reservation.id %></td>
+                            <td><%= reservation.clientName %></td>
+                            <td><%= reservation.date %></td>
+                            <td><%= reservation.time %></td>
+                            <td><%= reservation.guests %></td>
+                            <td><%= reservation.celular || '-' %></td>
+                            <td><%= reservation.notes || '-' %></td>
+                            <td style="white-space: nowrap;">
+                                <a href="/reservas/editar/<%= reservation.id %>" class="edit-btn">Editar</a>
+
+                                <form action="/reservas/cancelar/<%= reservation.id %>" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás segura de cancelar la reserva de <%= reservation.clientName %>? Esta acción es irreversible.');">
+                                    <button type="submit" class="delete-btn">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</body>
+</html>

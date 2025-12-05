@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Editar Reserva - Sistemas de Reservas Ortiz</title>
+    <style>
+        /* Copié el mismo CSS para mantener estilo idéntico */
+        :root { --color-primary: #8C4799; --color-secondary: #DDC8E7; --color-background: #F8F8F8; --color-text: #4A4A4A; --color-danger: #D63031; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; background-color:var(--color-background); color:var(--color-text); line-height:1.6;}
+        .container { max-width:1100px; margin:40px auto; background:white; padding:30px 40px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.08); }
+        h1 { color:var(--color-primary); text-align:center; font-weight:600; margin-bottom:30px; border-bottom:3px solid var(--color-secondary); padding-bottom:10px;}
+        h2 { color:var(--color-primary); margin-top:30px; margin-bottom:20px; font-weight:500;}
+        .form-group { margin-bottom:18px; }
+        .form-group label { display:block; margin-bottom:6px; font-weight:500; color:var(--color-text); }
+        .form-group input, .form-group textarea { width:100%; padding:10px; box-sizing:border-box; border:1px solid #E0E0E0; border-radius:6px; background-color:#FAFAFA;}
+        .action-button { background-color:var(--color-primary); color:white; padding:10px 20px; border:none; border-radius:6px; cursor:pointer; font-weight:600; transition:background-color .2s; }
+        .action-button:hover { background-color:#6C3577; }
+        .error { color:white; background-color:var(--color-danger); padding:15px; border-radius:8px; margin-bottom:25px; text-align:center; font-weight:bold; }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sistemas de Reservas Ortiz</h1>
+
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+
+    <div style="border: 2px solid var(--color-primary); padding: 25px; border-radius: 10px; margin-bottom: 40px; background-color: #FDFBFF;">
+      <h2>Editar Reserva #<%= reservation.id %></h2>
+
+      <form action="/reservas/editar/<%= reservation.id %>" method="POST">
+        <div style="display:flex; gap:20px;">
+          <div class="form-group" style="flex:1;">
+            <label for="clientName">Nombre del Cliente</label>
+            <input type="text" id="clientName" name="clientName" required value="<%= reservation.clientName %>">
+          </div>
+          <div class="form-group" style="flex:1;">
+            <label for="guests">Cantidad de Personas</label>
+            <input type="number" id="guests" name="guests" min="1" required value="<%= reservation.guests %>">
+          </div>
+        </div>
+
+        <div style="display:flex; gap:20px;">
+          <div class="form-group" style="flex:1;">
+            <label for="date">Fecha de Reserva</label>
+            <input type="date" id="date" name="date" required min="<%= minDate %>" value="<%= reservation.date %>">
+          </div>
+          <div class="form-group" style="flex:1;">
+            <label for="time">Hora de Reserva</label>
+            <input type="time" id="time" name="time" required value="<%= reservation.time %>">
+          </div>
+        </div>
+
+        <!-- NUEVO: Celular -->
+        <div class="form-group">
+          <label for="celular">Teléfono Celular</label>
+          <input type="tel" id="celular" name="celular" value="<%= reservation.celular %>" required>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Notas de Reserva</label>
+          <textarea id="notes" name="notes" rows="3"><%= reservation.notes %></textarea>
+        </div>
+
+        <button type="submit" class="action-button">Guardar Edición</button>
+        <a href="/" class="action-button" style="background-color:#ccc; color:var(--color-text); text-decoration:none; padding:10px 20px; margin-left:10px; display:inline-block;">Cancelar</a>
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>
